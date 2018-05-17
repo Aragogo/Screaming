@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+	   <script>
+            window.onload = function(){
+                var canvas = document.getElementById("myCanvas");
+				var context = canvas.getContext("2d");
+                
+                var my=0;
+                var CorrectAnswer=0;
+                var qnumber=0;
+                var rightanswers=0;
+                var wronganswers=0;
+                var QuizFinished=false;
+                var lock=false;
+                var textpos1=100;
+                var textpos2=263;
+                var textpos3=350;
+                var textpos4=430;
+                var Questions=["Osoba zaslužna za nastanak rokokoa je:?", "Kako se zvala silueta koja je nastupila nakon baroka?","Koji se poznati filmski lik smatra modnom ikonom, a nosila je krinoline?"];
+                
+                var quizbg = new Image();
+                quizbg.onload=function(){
+                    context.drawImage(quizbg,0,20);
+                    SetQuestions();
+                }
+                quizbg.src="untitled.png";
+                
+                function SetQuestions(){
+            if (qnumber==0){
+                context.fillStyle="black";
+                context.textBaseline="middle";
+                context.font="30px Century Gothic";
+                
+                context.fillText(Questions[qnumber],140,textpos1);
+                context.font="25px Century Gothic";
+                context.fillStyle="black";
+                context.fillText("Madame de Pomadour",390,textpos2);//točan
+                context.fillText("Marija Antoaneta",390,textpos3);
+                context.fillText("Carica Sisi",390,textpos4);
+                }
+                    
+            if (qnumber==1){
+                context.fillStyle="black";
+                context.textBaseline="middle";
+                context.font="25px Century Gothic";
+                
+                context.fillText(Questions[qnumber],140,textpos1);
+                context.font="25px Century Gothic";
+                context.fillStyle="black";
+                context.fillText("'Svečana silueta'",390,textpos2);
+                context.fillText("Raskošna silueta",390,textpos3);
+                context.fillText("Empirijska silueta",390,textpos4);//točan
+                }
+                    
+            if (qnumber==2){
+                context.fillStyle="black";
+                context.textBaseline="middle";
+                context.font="20px Century Gothic";
+                
+                context.fillText(Questions[qnumber],140,textpos1);
+                context.font="25px Century Gothic";
+                context.fillStyle="black";
+                context.fillText("Regina George",390,textpos2);
+                context.fillText("Scarlett O'Hara",390,textpos3);//točan
+                context.fillText("Cher Horowitz",390,textpos4);
+                }
+            }
+            canvas.addEventListener('click',ProcessClick);
+                
+            function ProcessClick(event){
+                
+            my=event.pageY - canvas.offsetTop;
+        if(lock){
+            ResetQ();
+        }
+        else{
+        //prvo pitanje
+        if((my>263 && my<290) &&(qnumber==0)){
+            context.drawImage(quizbg, 25,625,150,50,840,225,150,50);
+            rightanswers++;
+            context.font="20px Century Gothic";
+            context.fillText("Klikni za nastavak",30,570);
+            lock=true;
+            }
+        if((my>350 && my<389) &&(qnumber==0)){
+            context.drawImage(quizbg,200,625,150,50,840,350,150,50);
+            wronganswers++;
+            context.font="20px Century Gothic";
+            context.fillText("Klikni za nastavak",30,570);
+            lock=true;
+            }
+        if((my>430 && my<480) &&(qnumber==0)){
+            context.drawImage(quizbg,200,625,150,50,840,475,150,50);
+            wronganswers++;
+            context.font="20px Century Gothic";
+            context.fillText("Klikni za nastavak",30,570);
+            lock=true;
+            }
+            
+        //drugo pitanje
+        if((my>263 && my<290) &&(qnumber==1)){
+            context.drawImage(quizbg,200,625,150,50,840,225,150,50);
+            wronganswers++;
+            context.font="20px Century Gothic";
+            context.fillText("Klikni za nastavak",30,570);
+            lock=true;
+            }
+        if((my>350 && my<389) &&(qnumber==1)){
+            context.drawImage(quizbg,200,625,150,50,840,350,150,50);
+            wronganswers++;
+            context.font="20px Century Gothic";
+            context.fillText("Klikni za nastavak",30,570);
+            lock=true;
+            }
+        if((my>430 && my<480) &&(qnumber==1)){
+            context.drawImage(quizbg,25,625,150,50,840,475,150,50);
+            rightanswers++;
+            context.font="20px Century Gothic";
+            context.fillText("Klikni za nastavak",30,570);
+            lock=true;
+            }
+            
+        //trece pitanje
+        if((my>263 && my<290) &&(qnumber==2)){
+            context.drawImage(quizbg,200,625,150,50,840,225,150,50);
+            wronganswers++;
+            context.font="20px Century Gothic";
+            context.fillText("Klikni za nastavak",30,570);
+            lock=true;
+            }
+        if((my>350 && my<389) &&(qnumber==2)){
+            context.drawImage(quizbg,25,625,150,50,840,350,150,50);
+            rightanswers++;
+            context.font="20px Century Gothic";
+            context.fillText("Klikni za nastavak",30,570);
+            lock=true;
+            }
+        if((my>430 && my<600) &&(qnumber==2)){
+            context.drawImage(quizbg,200,625,150,50,840,475,150,50);
+            wronganswers++;
+            context.font="20px Century Gothic";
+            context.fillText("Klikni za nastavak",30,570);
+            lock=true;
+            }
+        }
+        }
+                
+        function ResetQ(){
+            lock=false;
+            context.clearRect(0,0,1000,1000);
+            qnumber++;
+            if(qnumber==Questions.length){EndQuiz();}
+            else{
+            context.drawImage(quizbg,0,20);
+            SetQuestions();
+            }
+        }
+                
+        function EndQuiz(){
+            canvas.removeEventListener('click',ProcessClick);
+            context.drawImage(quizbg, 75,40,850,130,0,0,0,100);
+            context.fillStyle="black";
+            context.font="40px Century Gothic";
+            context.fillText("Kraj",20,200);
+            context.font="25px Century Gothic";
+            context.fillText("Broj točnih odgovora: "+ rightanswers,20,300);
+            context.fillText("Broj netočnih odgovora: "+ wronganswers,20,350);
+        }
+                
+            };
+                    
+        </script>
+    </head>
+     <style>
+         #myCanvas{
+             background-image: url(PozadinaKviz.jpg);
+         }
+    </style>
+    <body>
+        <canvas id="myCanvas" width="1000" height="600" style="border: 1px solid black; position: absolute; left: 50px; top: 50px"></canvas>   
+    </body>
+</html>
